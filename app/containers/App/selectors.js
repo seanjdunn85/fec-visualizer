@@ -33,6 +33,23 @@ const makeSelectLocation = () => createSelector(
   (routeState) => routeState.get('location').toJS()
 );
 
+const makeSelectFEC = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('FEC')
+);
+
+const makeSelectGraph = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('graph')
+);
+const makeSelectParameter = (parameter) => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get(parameter)
+);
+const makeSelectMember = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('member')
+);
 export {
   selectGlobal,
   makeSelectCurrentUser,
@@ -40,4 +57,8 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
+  makeSelectFEC,
+  makeSelectGraph,
+  makeSelectParameter,
+  makeSelectMember
 };

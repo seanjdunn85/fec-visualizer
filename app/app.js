@@ -20,6 +20,8 @@ import 'sanitize.css/sanitize.css';
 // Import root app
 import App from 'containers/App';
 
+// Import the init action
+import { initApplication } from 'containers/App/actions';
 // Load the favicon
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
@@ -69,5 +71,5 @@ if (module.hot) {
     render();
   });
 }
-
+store.dispatch(initApplication());
 render();

@@ -18,10 +18,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+
+const styles = (theme) => ({
   root: {
     display: 'flex',
   },
@@ -81,6 +85,7 @@ const styles = theme => ({
 class PersistentDrawerLeft extends React.Component {
   state = {
     open: false,
+    anchorEl: null,
   };
 
   handleDrawerOpen = () => {
@@ -91,20 +96,36 @@ class PersistentDrawerLeft extends React.Component {
     this.setState({ open: false });
   };
 
+  handleCongressClick = (evt) => {
+    console.log(evt.currentTarget);
+    this.setState({anchorEl:evt.currentTarget});
+  }
+
   render() {
     const { classes, theme } = this.props;
-    const { open } = this.state;
+    const { open, anchorEl } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
-          position="fixed"
+          position="relative"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open,
           })}
         >
           <Toolbar disableGutters={!open}>
+
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={this.handleClose}
+            >
+              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+              <MenuItem onClick={this.handleClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+            </Menu>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -117,10 +138,12 @@ class PersistentDrawerLeft extends React.Component {
               Funny Money
             </Typography>
           </Toolbar>
+
         </AppBar>
+
         <Drawer
           className={classes.drawer}
-          variant="persistent"
+          variant="temporary"
           anchor="left"
           open={open}
           classes={{
@@ -151,37 +174,7 @@ class PersistentDrawerLeft extends React.Component {
             ))}
           </List>
         </Drawer>
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
-            elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-            hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing.
-            Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis
-            viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo.
-            Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
-            at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-            ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-            sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-            In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-            viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
-        </main>
+
       </div>
     );
   }
